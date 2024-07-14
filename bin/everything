@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+DEF='\e[0m'
+MGN='\e[95m'
+
+get_user_settings_json() {
+    cat "$HOME/.config/zed/settings.json"
+}
+
+get_user_keybindings_json() {
+    cat "$HOME/.config/zed/keymap.json"
+}
+
+get_commit_message() {
+    version=$(zed --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+    today=$(date -u +%Y-%m-%d)
+
+    echo "chore: Zed v$version <${USER}@$(hostname)> at $today"
+}
+
+main() {
+    get_user_keybindings_json >./extensions.json
+    get_user_settings_json >./settings.json
+
+    >&2 echo -e "${MGN}Done!${DEF}"
+
+    echo "git add *.json"
+    echo "git commit -m \"$(get_commit_message)\""
+}
+
+main "$@"
