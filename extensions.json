@@ -1,0 +1,8 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl+space": "terminal_panel::ToggleFocus"
+    }
+  }
+]
